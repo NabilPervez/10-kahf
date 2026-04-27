@@ -1,21 +1,40 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { BookOpen, Award, Settings, CheckCircle, XCircle, RefreshCw, Home, Eye, EyeOff } from 'lucide-react'
+import { BookOpen, Award, Settings as SettingsIcon, CheckCircle, XCircle, RefreshCw, Home, Bell, Volume2, Moon } from 'lucide-react'
 import clsx from 'clsx'
 import kahfData from './data/kahf.json'
+import { useStore } from './store'
 
 export default function App() {
+  const [currentTab, setCurrentTab] = useState('learn') // learn, progress, settings
   const [currentView, setCurrentView] = useState('dashboard') // dashboard, quiz, summary
-  const [activeModule, setActiveModule] = useState(null) // 'first10' or 'last10'
+  const [activeModule, setActiveModule] = useState(null)
   
+  const { 
+    streak, 
+    updateLoginStreak, 
+    first10Score, 
+    first10Total, 
+    last10Score, 
+    last10Total,
+    recordQuizResult,
+    troubleWords,
+    soundEnabled,
+    theme,
+    setSetting
+  } = useStore()
+
+  useEffect(() => {
+    updateLoginStreak()
+  }, [updateLoginStreak])
+
   // Quiz State
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [score, setScore] = useState(0)
   const [selectedOption, setSelectedOption] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
-  const [showTranslation, setShowTranslation] = useState(false)
-  const [results, setResults] = useState([]) // array of { id, correct }
+  const [results, setResults] = useState([])
 
   const startQuiz = (moduleKey) => {
     setActiveModule(moduleKey)
@@ -25,12 +44,12 @@ export default function App() {
     setResults([])
     setSelectedOption(null)
     setIsCorrect(null)
-    setShowTranslation(false)
     setCurrentView('quiz')
+    setCurrentTab('learn')
   }
 
   const handleOptionSelect = (index) => {
-    if (selectedOption !== null) return // prevent multiple clicks
+    if (selectedOption !== null) return
 
     setSelectedOption(index)
     const question = questions[currentIndex]
@@ -41,18 +60,21 @@ export default function App() {
       setScore(prev => prev + 1)
     }
 
-    setResults(prev => [...prev, { id: question.id, correct, question }])
+    const newResults = [...results, { id: question.id, correct, question }]
+    setResults(newResults)
 
     setTimeout(() => {
       if (currentIndex < questions.length - 1) {
         setCurrentIndex(prev => prev + 1)
         setSelectedOption(null)
         setIsCorrect(null)
-        setShowTranslation(false)
       } else {
+        // Record results in store
+        const finalScore = correct ? score + 1 : score
+        recordQuizResult(activeModule, finalScore, questions.length, newResults)
         setCurrentView('summary')
       }
-    }, 1500) // wait 1.5s to show feedback before advancing
+    }, 1500)
   }
 
   const getOptionClass = (index) => {
@@ -70,13 +92,21 @@ export default function App() {
 
   const activeQuestion = questions[currentIndex]
 
+  const getProgressPercentage = (score, total) => {
+    if (total === 0) return 0
+    return Math.round((score / total) * 100)
+  }
+
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto bg-brand-background shadow-2xl overflow-hidden relative">
+    <div className={clsx(
+      "min-h-screen flex flex-col max-w-md mx-auto shadow-2xl overflow-hidden relative",
+      theme === 'dark' ? 'bg-brand-charcoal text-white' : 'bg-brand-background text-brand-on-surface'
+    )}>
       <main className="flex-1 overflow-y-auto pb-20">
         <AnimatePresence mode="wait">
           
-          {/* DASHBOARD */}
-          {currentView === 'dashboard' && (
+          {/* LEARN TAB - DASHBOARD */}
+          {currentTab === 'learn' && currentView === 'dashboard' && (
             <motion.div
               key="dashboard"
               initial={{ opacity: 0, y: 10 }}
@@ -86,7 +116,9 @@ export default function App() {
             >
               <header className="text-center">
                 <h1 className="font-sans text-3xl font-bold tracking-tight text-brand-primary mb-2">Surah Kahf</h1>
-                <p className="text-brand-on-surface-variant font-sans">Welcome back! Your streak is <span className="font-bold text-brand-success">3 days</span>.</p>
+                <p className="text-brand-on-surface-variant font-sans">
+                  Welcome back! Your streak is <span className="font-bold text-brand-success">{streak} {streak === 1 ? 'day' : 'days'}</span>.
+                </p>
               </header>
 
               <div className="flex flex-col gap-stack-md">
@@ -98,8 +130,13 @@ export default function App() {
                     <h2 className="text-xl font-bold text-brand-on-surface mb-1 group-hover:text-brand-primary transition-colors">First 10 Ayahs</h2>
                     <p className="text-sm text-brand-on-surface-variant">Master the opening protection</p>
                   </div>
-                  <div className="h-12 w-12 rounded-full border-4 border-brand-success flex items-center justify-center text-brand-success font-bold bg-[#ecfdf5]">
-                    Go
+                  <div className={clsx(
+                    "h-14 w-14 rounded-full border-4 flex items-center justify-center font-bold text-sm",
+                    first10Total > 0 && getProgressPercentage(first10Score, first10Total) === 100 
+                      ? "border-brand-success text-brand-success bg-[#ecfdf5]" 
+                      : "border-brand-primary text-brand-primary bg-brand-surface"
+                  )}>
+                    {first10Total > 0 ? `${getProgressPercentage(first10Score, first10Total)}%` : 'Go'}
                   </div>
                 </button>
 
@@ -111,8 +148,13 @@ export default function App() {
                     <h2 className="text-xl font-bold text-brand-on-surface mb-1 group-hover:text-brand-primary transition-colors">Last 10 Ayahs</h2>
                     <p className="text-sm text-brand-on-surface-variant">Complete your memorization</p>
                   </div>
-                  <div className="h-12 w-12 rounded-full border-4 border-brand-surface-variant flex items-center justify-center text-brand-on-surface-variant font-bold">
-                    Go
+                  <div className={clsx(
+                    "h-14 w-14 rounded-full border-4 flex items-center justify-center font-bold text-sm",
+                    last10Total > 0 && getProgressPercentage(last10Score, last10Total) === 100 
+                      ? "border-brand-success text-brand-success bg-[#ecfdf5]" 
+                      : "border-brand-primary text-brand-primary bg-brand-surface"
+                  )}>
+                    {last10Total > 0 ? `${getProgressPercentage(last10Score, last10Total)}%` : 'Go'}
                   </div>
                 </button>
               </div>
@@ -120,7 +162,7 @@ export default function App() {
           )}
 
           {/* QUIZ VIEW */}
-          {currentView === 'quiz' && activeQuestion && (
+          {currentTab === 'learn' && currentView === 'quiz' && activeQuestion && (
             <motion.div
               key={`quiz-${currentIndex}`}
               initial={{ opacity: 0, x: 20 }}
@@ -144,15 +186,7 @@ export default function App() {
               <div className="flex-1 p-container flex flex-col justify-center items-center py-stack-lg">
                 <div className="text-center w-full bg-brand-surface-container-lowest p-8 rounded-2xl shadow-sm border border-brand-outline-variant/20 relative">
                   
-                  <button 
-                    onClick={() => setShowTranslation(!showTranslation)}
-                    className="absolute top-4 right-4 text-brand-on-surface-variant hover:text-brand-primary transition-colors bg-brand-surface-container p-2 rounded-full"
-                    title="Toggle Translation Hint"
-                  >
-                    {showTranslation ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-
-                  <p className="font-arabic text-4xl leading-[2.2] text-brand-on-surface dir-rtl mb-6 mt-4">
+                  <p className="font-arabic text-4xl leading-[2.2] text-brand-on-surface dir-rtl mb-6 mt-2">
                     {activeQuestion.arabic.split(activeQuestion.blanks[0].word).map((part, i, arr) => (
                       <span key={i}>
                         {part}
@@ -169,21 +203,10 @@ export default function App() {
                     ))}
                   </p>
                   
-                  <AnimatePresence>
-                    {showTranslation && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <hr className="border-brand-outline-variant/30 my-6" />
-                        <p className="font-sans text-brand-on-surface-variant leading-relaxed text-lg">
-                          {activeQuestion.english}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  <hr className="border-brand-outline-variant/30 my-6" />
+                  <p className="font-sans text-brand-on-surface-variant leading-relaxed text-lg">
+                    {activeQuestion.english}
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 w-full mt-12">
@@ -206,7 +229,7 @@ export default function App() {
           )}
 
           {/* SUMMARY VIEW */}
-          {currentView === 'summary' && (
+          {currentTab === 'learn' && currentView === 'summary' && (
             <motion.div
               key="summary"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -263,23 +286,145 @@ export default function App() {
             </motion.div>
           )}
 
+          {/* PROGRESS TAB */}
+          {currentTab === 'progress' && (
+            <motion.div
+              key="progress"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="p-container flex flex-col gap-stack-lg pt-12 pb-24"
+            >
+              <header>
+                <h1 className="font-sans text-3xl font-bold tracking-tight text-brand-primary mb-2">Your Progress</h1>
+                <p className="text-brand-on-surface-variant text-sm">Track your memorization journey.</p>
+              </header>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-brand-surface-container-lowest p-5 rounded-xl border border-brand-outline-variant/30 text-center shadow-sm">
+                  <div className="text-3xl font-bold text-brand-primary mb-1">{getProgressPercentage(first10Score, first10Total)}%</div>
+                  <div className="text-xs font-bold text-brand-on-surface-variant uppercase tracking-wider">First 10</div>
+                </div>
+                <div className="bg-brand-surface-container-lowest p-5 rounded-xl border border-brand-outline-variant/30 text-center shadow-sm">
+                  <div className="text-3xl font-bold text-brand-primary mb-1">{getProgressPercentage(last10Score, last10Total)}%</div>
+                  <div className="text-xs font-bold text-brand-on-surface-variant uppercase tracking-wider">Last 10</div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-brand-on-surface mb-4 flex items-center justify-between">
+                  Trouble Words
+                  <span className="bg-brand-error-container text-brand-on-error-container text-xs px-2 py-1 rounded-full">{troubleWords.length}</span>
+                </h3>
+                
+                {troubleWords.length === 0 ? (
+                  <div className="bg-brand-surface-container-lowest p-8 rounded-xl border border-brand-outline-variant/30 text-center">
+                    <CheckCircle className="mx-auto text-brand-success mb-3" size={32} />
+                    <p className="text-brand-on-surface-variant">You have no trouble words! Keep up the great work.</p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-3">
+                    {troubleWords.sort((a,b) => b.misses - a.misses).map((tw, i) => (
+                      <div key={i} className="bg-brand-surface-container-lowest p-4 rounded-xl border border-brand-outline-variant/30 shadow-sm flex items-center justify-between gap-4">
+                        <div className="flex-1">
+                          <p className="font-arabic text-2xl text-brand-on-surface mb-1 text-right">{tw.word}</p>
+                          <p className="text-sm text-brand-on-surface-variant italic truncate">{tw.english}</p>
+                        </div>
+                        <div className="bg-brand-error-container text-brand-on-error-container font-bold text-sm h-8 w-8 rounded-full flex items-center justify-center shrink-0">
+                          {tw.misses}x
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {/* SETTINGS TAB */}
+          {currentTab === 'settings' && (
+            <motion.div
+              key="settings"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="p-container flex flex-col gap-stack-lg pt-12 pb-24 h-full"
+            >
+              <header>
+                <h1 className="font-sans text-3xl font-bold tracking-tight text-brand-primary mb-2">Settings</h1>
+                <p className="text-brand-on-surface-variant text-sm">Customize your learning experience.</p>
+              </header>
+
+              <div className="bg-brand-surface-container-lowest rounded-2xl border border-brand-outline-variant/30 overflow-hidden shadow-sm">
+                
+                <div className="p-5 flex items-center justify-between border-b border-brand-outline-variant/20">
+                  <div className="flex items-center gap-3 text-brand-on-surface">
+                    <Volume2 size={20} className="text-brand-primary" />
+                    <span className="font-semibold">Sound Effects</span>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" checked={soundEnabled} onChange={() => setSetting('soundEnabled', !soundEnabled)} />
+                    <div className="w-11 h-6 bg-brand-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-primary"></div>
+                  </label>
+                </div>
+
+                <div className="p-5 flex items-center justify-between border-b border-brand-outline-variant/20">
+                  <div className="flex items-center gap-3 text-brand-on-surface">
+                    <Moon size={20} className="text-brand-primary" />
+                    <span className="font-semibold">Dark Theme</span>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" checked={theme === 'dark'} onChange={() => setSetting('theme', theme === 'dark' ? 'light' : 'dark')} />
+                    <div className="w-11 h-6 bg-brand-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-primary"></div>
+                  </label>
+                </div>
+
+                <div className="p-5 flex items-center justify-between opacity-50 cursor-not-allowed">
+                  <div className="flex items-center gap-3 text-brand-on-surface">
+                    <Bell size={20} className="text-brand-primary" />
+                    <span className="font-semibold">Thursday Reminders</span>
+                  </div>
+                  <div className="text-xs bg-brand-surface-container-high px-2 py-1 rounded">Coming Soon</div>
+                </div>
+              </div>
+              
+              <div className="mt-auto text-center pb-4">
+                <p className="text-xs text-brand-on-surface-variant mb-1">A Waqf Project.</p>
+                <p className="text-xs font-bold text-brand-primary">10-Kahf v1.0.0</p>
+              </div>
+            </motion.div>
+          )}
+
         </AnimatePresence>
       </main>
 
       {/* Bottom Nav */}
       <nav className="bg-brand-surface-container-lowest border-t border-brand-outline-variant/20 flex justify-around items-center h-20 absolute bottom-0 w-full z-20 pb-safe">
-        <button className="flex flex-col items-center gap-1 text-brand-primary relative group">
-          <BookOpen size={24} className="stroke-[2.5px] group-hover:-translate-y-1 transition-transform" />
+        <button 
+          onClick={() => { setCurrentTab('learn'); setCurrentView('dashboard') }} 
+          className={clsx("flex flex-col items-center gap-1 relative group transition-colors", currentTab === 'learn' ? "text-brand-primary" : "text-brand-on-surface-variant hover:text-brand-primary")}
+        >
+          <BookOpen size={24} className={clsx(currentTab === 'learn' && "stroke-[2.5px]", "group-hover:-translate-y-1 transition-transform")} />
           <span className="text-[10px] font-bold tracking-wider">LEARN</span>
-          <div className="w-1.5 h-1.5 bg-brand-primary rounded-full absolute -bottom-3"></div>
+          {currentTab === 'learn' && <div className="w-1.5 h-1.5 bg-brand-primary rounded-full absolute -bottom-3"></div>}
         </button>
-        <button className="flex flex-col items-center gap-1 text-brand-on-surface-variant hover:text-brand-primary transition-colors group">
-          <Award size={24} className="group-hover:-translate-y-1 transition-transform" />
+        
+        <button 
+          onClick={() => setCurrentTab('progress')}
+          className={clsx("flex flex-col items-center gap-1 relative group transition-colors", currentTab === 'progress' ? "text-brand-primary" : "text-brand-on-surface-variant hover:text-brand-primary")}
+        >
+          <Award size={24} className={clsx(currentTab === 'progress' && "stroke-[2.5px]", "group-hover:-translate-y-1 transition-transform")} />
           <span className="text-[10px] font-bold tracking-wider">PROGRESS</span>
+          {currentTab === 'progress' && <div className="w-1.5 h-1.5 bg-brand-primary rounded-full absolute -bottom-3"></div>}
         </button>
-        <button className="flex flex-col items-center gap-1 text-brand-on-surface-variant hover:text-brand-primary transition-colors group">
-          <Settings size={24} className="group-hover:-translate-y-1 transition-transform" />
+        
+        <button 
+          onClick={() => setCurrentTab('settings')}
+          className={clsx("flex flex-col items-center gap-1 relative group transition-colors", currentTab === 'settings' ? "text-brand-primary" : "text-brand-on-surface-variant hover:text-brand-primary")}
+        >
+          <SettingsIcon size={24} className={clsx(currentTab === 'settings' && "stroke-[2.5px]", "group-hover:-translate-y-1 transition-transform")} />
           <span className="text-[10px] font-bold tracking-wider">SETTINGS</span>
+          {currentTab === 'settings' && <div className="w-1.5 h-1.5 bg-brand-primary rounded-full absolute -bottom-3"></div>}
         </button>
       </nav>
     </div>
