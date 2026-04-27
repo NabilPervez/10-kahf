@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { BookOpen, Award, Settings as SettingsIcon, CheckCircle, XCircle, RefreshCw, Home, Bell, Volume2, Moon, Play, VolumeX, Volume1 } from 'lucide-react'
+import { BookOpen, Award, Settings as SettingsIcon, CheckCircle, XCircle, RefreshCw, Home, Bell, Volume2, Moon, Play, Pause, VolumeX, Volume1 } from 'lucide-react'
 import clsx from 'clsx'
 import kahfData from './data/kahf.json'
 import { useStore } from './store'
@@ -40,6 +40,7 @@ export default function App() {
   const audioRef = useRef(null)
   const [volume, setVolume] = useState(1)
   const [autoPlayAudio, setAutoPlayAudio] = useState(true)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const activeQuestion = questions[currentIndex]
 
@@ -121,7 +122,20 @@ export default function App() {
     }
   }, [volume])
 
-  const handlePlayAudio = () => {
+  const handlePlayPause = () => {
+    if (audioRef.current) {
+      if (audioRef.current.ended) {
+        audioRef.current.currentTime = 0
+        audioRef.current.play()
+      } else if (audioRef.current.paused) {
+        audioRef.current.play()
+      } else {
+        audioRef.current.pause()
+      }
+    }
+  }
+
+  const handleRepeat = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0
       audioRef.current.play()
@@ -218,18 +232,34 @@ export default function App() {
                 
                 {/* Audio Controls */}
                 <div className="w-full bg-brand-surface-container-lowest p-4 rounded-xl shadow-sm border border-brand-outline-variant/20 mb-4 flex flex-col gap-3">
-                  <audio ref={audioRef} src={getAudioUrl(activeQuestion.verse_key)} />
+                  <audio 
+                    ref={audioRef} 
+                    src={getAudioUrl(activeQuestion.verse_key)} 
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                    onEnded={() => setIsPlaying(false)}
+                  />
                   
                   <div className="flex justify-between items-center">
                     <span className="font-bold text-brand-primary">Surah Al-Kahf, Ayah {activeQuestion.verse_key.split(':')[1]}</span>
                     
-                    <button 
-                      onClick={handlePlayAudio}
-                      className="bg-brand-primary text-white p-2 rounded-full hover:bg-brand-primary-container transition-colors shadow-md"
-                      title="Replay Ayah"
-                    >
-                      <Play size={18} fill="currentColor" className="ml-0.5" />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button 
+                        onClick={handleRepeat}
+                        className="bg-brand-surface-container text-brand-primary p-2 rounded-full hover:bg-brand-surface-container-high transition-colors"
+                        title="Repeat Ayah"
+                      >
+                        <RefreshCw size={18} />
+                      </button>
+                      
+                      <button 
+                        onClick={handlePlayPause}
+                        className="bg-brand-primary text-white p-2 rounded-full hover:bg-brand-primary-container transition-colors shadow-md"
+                        title={isPlaying ? "Pause Ayah" : "Play Ayah"}
+                      >
+                        {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" className="ml-0.5" />}
+                      </button>
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-4 bg-brand-surface-container rounded-lg p-2">
