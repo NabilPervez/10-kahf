@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { BookOpen, Award, Settings as SettingsIcon, CheckCircle, XCircle, RefreshCw, Home, Bell, Volume2, Moon } from 'lucide-react'
+import { BookOpen, Award, Settings as SettingsIcon, CheckCircle, XCircle, RefreshCw, Home, Bell, Volume2, Moon, Play, VolumeX, Volume1 } from 'lucide-react'
 import clsx from 'clsx'
 import kahfData from './data/kahf.json'
 import { useStore } from './store'
@@ -19,7 +19,7 @@ export default function App() {
     last10Total,
     recordQuizResult,
     troubleWords,
-    soundEnabled,
+    soundEnabled, // we can use this for global sound, but user asked for quiz-specific toggles
     theme,
     setSetting
   } = useStore()
@@ -35,6 +35,13 @@ export default function App() {
   const [selectedOption, setSelectedOption] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
   const [results, setResults] = useState([])
+  
+  // Audio State
+  const audioRef = useRef(null)
+  const [volume, setVolume] = useState(1)
+  const [autoPlayAudio, setAutoPlayAudio] = useState(true)
+
+  const activeQuestion = questions[currentIndex]
 
   const startQuiz = (moduleKey) => {
     setActiveModule(moduleKey)
@@ -69,7 +76,6 @@ export default function App() {
         setSelectedOption(null)
         setIsCorrect(null)
       } else {
-        // Record results in store
         const finalScore = correct ? score + 1 : score
         recordQuizResult(activeModule, finalScore, questions.length, newResults)
         setCurrentView('summary')
@@ -90,11 +96,36 @@ export default function App() {
     return "border-brand-surface-container-high bg-brand-surface-container-lowest opacity-50"
   }
 
-  const activeQuestion = questions[currentIndex]
-
   const getProgressPercentage = (score, total) => {
     if (total === 0) return 0
     return Math.round((score / total) * 100)
+  }
+
+  // Audio URL constructor
+  const getAudioUrl = (verseKey) => {
+    if (!verseKey) return ''
+    const [chapter, verse] = verseKey.split(':')
+    return `https://verses.quran.com/Alafasy/mp3/${chapter.padStart(3, '0')}${verse.padStart(3, '0')}.mp3`
+  }
+
+  useEffect(() => {
+    if (currentView === 'quiz' && activeQuestion && autoPlayAudio && audioRef.current) {
+      audioRef.current.currentTime = 0
+      audioRef.current.play().catch(e => console.log('Autoplay prevented', e))
+    }
+  }, [currentIndex, currentView, activeQuestion, autoPlayAudio])
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume
+    }
+  }, [volume])
+
+  const handlePlayAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0
+      audioRef.current.play()
+    }
   }
 
   return (
@@ -171,7 +202,7 @@ export default function App() {
               className="flex flex-col h-full relative"
             >
               <div className="p-container flex items-center justify-between border-b border-brand-outline-variant/20 bg-brand-surface-container-lowest sticky top-0 z-10">
-                <button onClick={() => setCurrentView('dashboard')} className="text-brand-primary font-semibold hover:opacity-80">Quit</button>
+                <button onClick={() => { setCurrentView('dashboard'); if(audioRef.current) audioRef.current.pause() }} className="text-brand-primary font-semibold hover:opacity-80">Quit</button>
                 <div className="flex-1 mx-4">
                   <div className="h-2 bg-brand-surface-container-high rounded-full overflow-hidden">
                     <div 
@@ -183,9 +214,49 @@ export default function App() {
                 <span className="text-sm font-bold text-brand-on-surface-variant">{currentIndex + 1}/{questions.length}</span>
               </div>
               
-              <div className="flex-1 p-container flex flex-col justify-center items-center py-stack-lg">
-                <div className="text-center w-full bg-brand-surface-container-lowest p-8 rounded-2xl shadow-sm border border-brand-outline-variant/20 relative">
+              <div className="flex-1 p-container flex flex-col justify-center items-center py-stack-sm">
+                
+                {/* Audio Controls */}
+                <div className="w-full bg-brand-surface-container-lowest p-4 rounded-xl shadow-sm border border-brand-outline-variant/20 mb-4 flex flex-col gap-3">
+                  <audio ref={audioRef} src={getAudioUrl(activeQuestion.verse_key)} />
                   
+                  <div className="flex justify-between items-center">
+                    <span className="font-bold text-brand-primary">Surah Al-Kahf, Ayah {activeQuestion.verse_key.split(':')[1]}</span>
+                    
+                    <button 
+                      onClick={handlePlayAudio}
+                      className="bg-brand-primary text-white p-2 rounded-full hover:bg-brand-primary-container transition-colors shadow-md"
+                      title="Replay Ayah"
+                    >
+                      <Play size={18} fill="currentColor" className="ml-0.5" />
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-4 bg-brand-surface-container rounded-lg p-2">
+                    <div className="flex items-center gap-2 flex-1">
+                      {volume === 0 ? <VolumeX size={16} className="text-brand-on-surface-variant" /> : <Volume1 size={16} className="text-brand-on-surface-variant" />}
+                      <input 
+                        type="range" 
+                        min="0" 
+                        max="1" 
+                        step="0.05" 
+                        value={volume} 
+                        onChange={(e) => setVolume(parseFloat(e.target.value))}
+                        className="w-full h-1 bg-brand-outline-variant rounded-lg appearance-none cursor-pointer accent-brand-primary"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2 border-l border-brand-outline-variant/30 pl-4">
+                      <span className="text-xs font-semibold text-brand-on-surface-variant">Auto-Play</span>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" className="sr-only peer" checked={autoPlayAudio} onChange={() => setAutoPlayAudio(!autoPlayAudio)} />
+                        <div className="w-8 h-4 bg-brand-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-brand-primary"></div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Question Area */}
+                <div className="text-center w-full bg-brand-surface-container-lowest p-8 rounded-2xl shadow-sm border border-brand-outline-variant/20 relative">
                   <p className="font-arabic text-4xl leading-[2.2] text-brand-on-surface dir-rtl mb-6 mt-2">
                     {activeQuestion.arabic.split(activeQuestion.blanks[0].word).map((part, i, arr) => (
                       <span key={i}>
@@ -209,14 +280,14 @@ export default function App() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 w-full mt-12">
+                <div className="grid grid-cols-2 gap-4 w-full mt-6">
                   {activeQuestion.blanks[0].options.map((opt, i) => (
                     <button 
                       key={i} 
                       onClick={() => handleOptionSelect(i)}
                       disabled={selectedOption !== null}
                       className={clsx(
-                        "font-arabic text-3xl py-6 rounded-xl border-2 transition-all duration-300 font-medium",
+                        "font-arabic text-3xl py-6 rounded-xl border-2 transition-all duration-300 font-medium shadow-sm",
                         getOptionClass(i)
                       )}
                     >
@@ -360,7 +431,7 @@ export default function App() {
                 <div className="p-5 flex items-center justify-between border-b border-brand-outline-variant/20">
                   <div className="flex items-center gap-3 text-brand-on-surface">
                     <Volume2 size={20} className="text-brand-primary" />
-                    <span className="font-semibold">Sound Effects</span>
+                    <span className="font-semibold">App Sounds</span>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" className="sr-only peer" checked={soundEnabled} onChange={() => setSetting('soundEnabled', !soundEnabled)} />
