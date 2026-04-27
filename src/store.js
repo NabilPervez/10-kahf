@@ -44,13 +44,16 @@ export const useStore = create(
           }
           
           // Update trouble words
-          const newTroubleWords = [...state.troubleWords]
+          let newTroubleWords = [...state.troubleWords]
           results.forEach(r => {
             if (!r.correct) {
               const missedWord = r.question.blanks[0].word
-              const existing = newTroubleWords.find(tw => tw.word === missedWord)
-              if (existing) {
-                existing.misses += 1
+              const existingIndex = newTroubleWords.findIndex(tw => tw.word === missedWord)
+              if (existingIndex >= 0) {
+                newTroubleWords[existingIndex] = { 
+                  ...newTroubleWords[existingIndex], 
+                  misses: newTroubleWords[existingIndex].misses + 1 
+                }
               } else {
                 newTroubleWords.push({
                   word: missedWord,

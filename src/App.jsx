@@ -216,7 +216,13 @@ export default function App() {
               className="flex flex-col h-full relative"
             >
               <div className="p-container flex items-center justify-between border-b border-brand-outline-variant/20 bg-brand-surface-container-lowest sticky top-0 z-10">
-                <button onClick={() => { setCurrentView('dashboard'); if(audioRef.current) audioRef.current.pause() }} className="text-brand-primary font-semibold hover:opacity-80">Quit</button>
+                <button onClick={() => { 
+                  if (results.length > 0) {
+                    recordQuizResult(activeModule, score, questions.length, results)
+                  }
+                  setCurrentView('dashboard'); 
+                  if(audioRef.current) audioRef.current.pause() 
+                }} className="text-brand-primary font-semibold hover:opacity-80">Quit</button>
                 <div className="flex-1 mx-4">
                   <div className="h-2 bg-brand-surface-container-high rounded-full overflow-hidden">
                     <div 
