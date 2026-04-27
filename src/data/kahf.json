@@ -3,14 +3,15 @@
     {
       "id": 2141,
       "verse_key": "18:1",
-      "arabic": "ٱلْحَمْدُ لِلَّهِ ٱلَّذِىٓ أَنزَلَ عَلَى�� عَبْدِهِ ٱلْكِتَـٰبَ وَلَمْ يَجْعَل لَّهُۥ عِوَجَاۜ",
+      "arabic": "ٱلْحَمْدُ لِلَّهِ ٱلَّذِىٓ أَنزَلَ عَلَ��ٰ عَبْدِهِ ٱلْكِتَـٰبَ وَلَمْ يَجْعَل لَّهُۥ عِوَجَاۜ",
       "english": "All Praise (is) for Allah the One Who (has) revealed to His slave the Book and not (has) made in it any crookedness",
+      "transliteration": "al-ḥamdu lillahi alladhī anzala ʿalā ʿabdihi l-kitāba walam yajʿal lahu ʿiwajā",
       "words": [
         "ٱلْحَمْدُ",
         "لِلَّهِ",
         "ٱلَّذِىٓ",
         "أَنزَلَ",
-        "عَلَى��",
+        "عَلَ��ٰ",
         "عَبْدِهِ",
         "ٱلْكِتَـٰبَ",
         "وَلَمْ",
@@ -20,14 +21,14 @@
       ],
       "blanks": [
         {
-          "word": "وَلَمْ",
+          "word": "أَنزَلَ",
           "options": [
-            "وَلَمْ",
             "ءَاثَـٰرِهِمْ",
-            "أَنزَلَ",
-            "أَسَفًا"
+            "ءَاتِنَا",
+            "عَجَبًا",
+            "أَنزَلَ"
           ],
-          "correctIndex": 0
+          "correctIndex": 3
         }
       ]
     },
@@ -36,6 +37,7 @@
       "verse_key": "18:2",
       "arabic": "قَيِّمًۭا لِّيُنذِرَ بَأْسًۭا شَدِيدًۭا مِّن لَّدُنْهُ وَيُبَشِّرَ ٱلْمُؤْمِنِينَ ٱلَّذِينَ يَعْمَلُونَ ٱلصَّـٰلِحَـٰتِ أَنَّ لَهُمْ أَجْرًا حَسَنًۭا",
       "english": "Straight to warn (of) a punishment severe from near Him and give glad tidings (to) the believers those who do righteous deeds that for them (is) a good reward (is) a good reward",
+      "transliteration": "qayyiman liyundhira basan shadīdan min ladun'hu wayubashira l-mu'minīna alladhīna yaʿmalūna l-ṣāliḥāti anna lahum ajran ḥasanan",
       "words": [
         "قَيِّمًۭا",
         "لِّيُنذِرَ",
@@ -55,14 +57,14 @@
       ],
       "blanks": [
         {
-          "word": "ٱلَّذِينَ",
+          "word": "لَهُمْ",
           "options": [
-            "إِنَّا",
-            "ٱلَّذِينَ",
-            "أَبَدًۭا",
-            "لَنَا"
+            "لَجَـٰعِلُونَ",
+            "لِّيُنذِرَ",
+            "لَهُمْ",
+            "أَمْرِنَا"
           ],
-          "correctIndex": 1
+          "correctIndex": 2
         }
       ]
     },
@@ -71,6 +73,7 @@
       "verse_key": "18:3",
       "arabic": "مَّـٰكِثِينَ فِيهِ أَبَدًۭا",
       "english": "(They will) abide in it forever",
+      "transliteration": "mākithīna fīhi abadan",
       "words": [
         "مَّـٰكِثِينَ",
         "فِيهِ",
@@ -80,12 +83,12 @@
         {
           "word": "أَبَدًۭا",
           "options": [
-            "أَبَدًۭا",
-            "إِلَى",
-            "عَبْدِهِ",
-            "وَلَدًۭا"
+            "بَـٰخِعٌۭ",
+            "جُرُزًا",
+            "كَانُوا۟",
+            "أَبَدًۭا"
           ],
-          "correctIndex": 0
+          "correctIndex": 3
         }
       ]
     },
@@ -94,6 +97,7 @@
       "verse_key": "18:4",
       "arabic": "وَيُنذِرَ ٱلَّذِينَ قَالُوا۟ ٱتَّخَذَ ٱللَّهُ وَلَدًۭا",
       "english": "And to warn those who say Allah has taken Allah has taken a son",
+      "transliteration": "wayundhira alladhīna qālū ittakhadha l-lahu waladan",
       "words": [
         "وَيُنذِرَ",
         "ٱلَّذِينَ",
@@ -104,12 +108,12 @@
       ],
       "blanks": [
         {
-          "word": "وَلَدًۭا",
+          "word": "ٱلَّذِينَ",
           "options": [
-            "وَلَدًۭا",
-            "تَخْرُجُ",
-            "يَجْعَل",
-            "بِهَـٰذَا"
+            "ٱلَّذِينَ",
+            "صَعِيدًۭا",
+            "أَنَّ",
+            "عِوَجَاۜ"
           ],
           "correctIndex": 0
         }
@@ -118,14 +122,15 @@
     {
       "id": 2145,
       "verse_key": "18:5",
-      "arabic": "مَّا لَهُم بِهِۦ مِنْ عِلْم��ۢ وَلَا لِـَٔابَآئِهِمْ ۚ كَبُرَتْ كَلِمَةًۭ تَخْرُجُ مِنْ أَفْوَٰهِهِمْ ۚ إِن يَقُولُونَ إِلَّا كَذِبًۭا",
+      "arabic": "مَّا لَهُم بِهِۦ مِنْ عِلْ��ٍۢ وَلَا لِـَٔابَآئِهِمْ ۚ كَبُرَتْ كَلِمَةًۭ تَخْرُجُ مِنْ أَفْوَٰهِهِمْ ۚ إِن يَقُولُونَ إِلَّا كَذِبًۭا",
       "english": "Not they have about it any knowledge and not their forefathers Grave (is) the word (that) comes out of their mouths Not they say except a lie",
+      "transliteration": "mā lahum bihi min ʿil'min walā liābāihim kaburat kalimatan takhruju min afwāhihim in yaqūlūna illā kadhiban",
       "words": [
         "مَّا",
         "لَهُم",
         "بِهِۦ",
         "مِنْ",
-        "عِلْم��ۢ",
+        "عِلْ��ٍۢ",
         "وَلَا",
         "لِـَٔابَآئِهِمْ ۚ",
         "كَبُرَتْ",
@@ -140,14 +145,14 @@
       ],
       "blanks": [
         {
-          "word": "يَقُولُونَ",
+          "word": "تَخْرُجُ",
           "options": [
-            "بَـٰخِعٌۭ",
-            "ٱلْكِتَـٰبَ",
-            "أَنزَلَ",
-            "يَقُولُونَ"
+            "لِنَبْلُوَهُمْ",
+            "وَلَمْ",
+            "تَخْرُجُ",
+            "أَفْوَٰهِهِمْ ۚ"
           ],
-          "correctIndex": 3
+          "correctIndex": 2
         }
       ]
     },
@@ -156,6 +161,7 @@
       "verse_key": "18:6",
       "arabic": "فَلَعَلَّكَ بَـٰخِعٌۭ نَّفْسَكَ عَلَىٰٓ ءَاثَـٰرِهِمْ إِن لَّمْ يُؤْمِنُوا۟ بِهَـٰذَا ٱلْحَدِيثِ أَسَفًا",
       "english": "Then perhaps you would (be) the one who kills yourself over their footsteps if not they believe in this [the] narration (in) grief",
+      "transliteration": "falaʿallaka bākhiʿun nafsaka ʿalā āthārihim in lam yu'minū bihādhā l-ḥadīthi asafan",
       "words": [
         "فَلَعَلَّكَ",
         "بَـٰخِعٌۭ",
@@ -171,14 +177,14 @@
       ],
       "blanks": [
         {
-          "word": "بِهَـٰذَا",
+          "word": "بَـٰخِعٌۭ",
           "options": [
-            "بِهَـٰذَا",
-            "مَّـٰكِثِينَ",
-            "لَّهَا",
-            "بَأْسًۭا"
+            "فَقَالُوا۟",
+            "بِهِۦ",
+            "بَـٰخِعٌۭ",
+            "كَانُوا۟"
           ],
-          "correctIndex": 0
+          "correctIndex": 2
         }
       ]
     },
@@ -187,6 +193,7 @@
       "verse_key": "18:7",
       "arabic": "إِنَّا جَعَلْنَا مَا عَلَى ٱلْأَرْضِ زِينَةًۭ لَّهَا لِنَبْلُوَهُمْ أَيُّهُمْ أَحْسَنُ عَمَلًۭا",
       "english": "Indeed, We We have made what (is) on the earth adornment for it that We may test [them] which of them (is) best (in) deed",
+      "transliteration": "innā jaʿalnā mā ʿalā l-arḍi zīnatan lahā linabluwahum ayyuhum aḥsanu ʿamalan",
       "words": [
         "إِنَّا",
         "جَعَلْنَا",
@@ -202,14 +209,14 @@
       ],
       "blanks": [
         {
-          "word": "ٱلْأَرْضِ",
+          "word": "زِينَةًۭ",
           "options": [
-            "إِذْ",
-            "ٱلْأَرْضِ",
-            "بِهَـٰذَا",
-            "ءَاتِنَا"
+            "زِينَةًۭ",
+            "بَأْسًۭا",
+            "ٱلْحَمْدُ",
+            "وَلَمْ"
           ],
-          "correctIndex": 1
+          "correctIndex": 0
         }
       ]
     },
@@ -218,6 +225,7 @@
       "verse_key": "18:8",
       "arabic": "وَإِنَّا لَجَـٰعِلُونَ مَا عَلَيْهَا صَعِيدًۭا جُرُزًا",
       "english": "And indeed, We (will) surely make what (is) on it soil barren",
+      "transliteration": "wa-innā lajāʿilūna mā ʿalayhā ṣaʿīdan juruzan",
       "words": [
         "وَإِنَّا",
         "لَجَـٰعِلُونَ",
@@ -228,12 +236,12 @@
       ],
       "blanks": [
         {
-          "word": "وَإِنَّا",
+          "word": "صَعِيدًۭا",
           "options": [
-            "لِّيُنذِرَ",
-            "عَبْدِهِ",
-            "جَعَلْنَا",
-            "وَإِنَّا"
+            "أَيُّهُمْ",
+            "لَّهَا",
+            "فَلَعَلَّكَ",
+            "صَعِيدًۭا"
           ],
           "correctIndex": 3
         }
@@ -242,14 +250,15 @@
     {
       "id": 2149,
       "verse_key": "18:9",
-      "arabic": "أَمْ حَسِبْتَ أَنَّ أَصْحَـٰبَ ٱلْ��َهْفِ وَٱلرَّقِيمِ كَانُوا۟ مِنْ ءَايَـٰتِنَا عَجَبًا",
+      "arabic": "أَمْ حَسِبْتَ أَنَّ أَصْحَـٰبَ ٱل��كَهْفِ وَٱلرَّقِيمِ كَانُوا۟ مِنْ ءَايَـٰتِنَا عَجَبًا",
       "english": "Or have you thought that (the) companions (of) the cave and the inscription were among Our Signs a wonder",
+      "transliteration": "am ḥasib'ta anna aṣḥāba l-kahfi wal-raqīmi kānū min āyātinā ʿajaban",
       "words": [
         "أَمْ",
         "حَسِبْتَ",
         "أَنَّ",
         "أَصْحَـٰبَ",
-        "ٱلْ��َهْفِ",
+        "ٱل��كَهْفِ",
         "وَٱلرَّقِيمِ",
         "كَانُوا۟",
         "مِنْ",
@@ -260,12 +269,12 @@
         {
           "word": "أَصْحَـٰبَ",
           "options": [
-            "لِنَبْلُوَهُمْ",
-            "ٱلَّذِينَ",
             "أَصْحَـٰبَ",
-            "ٱلْحَدِيثِ"
+            "بَأْسًۭا",
+            "ٱلصَّـٰلِحَـٰتِ",
+            "أَنزَلَ"
           ],
-          "correctIndex": 2
+          "correctIndex": 0
         }
       ]
     },
@@ -274,6 +283,7 @@
       "verse_key": "18:10",
       "arabic": "إِذْ أَوَى ٱلْفِتْيَةُ إِلَى ٱلْكَهْفِ فَقَالُوا۟ رَبَّنَآ ءَاتِنَا مِن لَّدُنكَ رَحْمَةًۭ وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًۭا",
       "english": "When retreated the youths to the cave and they said Our Lord Grant us from Yourself Mercy and facilitate for us [from] our affair (in the) right way",
+      "transliteration": "idh awā l-fit'yatu ilā l-kahfi faqālū rabbanā ātinā min ladunka raḥmatan wahayyi lanā min amrinā rashadan",
       "words": [
         "إِذْ",
         "أَوَى",
@@ -294,12 +304,12 @@
       ],
       "blanks": [
         {
-          "word": "فَقَالُوا۟",
+          "word": "رَحْمَةًۭ",
           "options": [
-            "فَقَالُوا۟",
-            "عَلَى��",
-            "عَبْدِهِ",
-            "عَجَبًا"
+            "رَحْمَةًۭ",
+            "مِنْ",
+            "يُؤْمِنُوا۟",
+            "لِنَبْلُوَهُمْ"
           ],
           "correctIndex": 0
         }
@@ -312,6 +322,7 @@
       "verse_key": "18:1",
       "arabic": "ٱلْحَمْدُ لِلَّهِ ٱلَّذِىٓ أَنزَلَ عَلَىٰ عَبْدِهِ ٱلْكِتَـٰبَ وَلَمْ يَجْعَل لَّهُۥ عِوَجَاۜ",
       "english": "All Praise (is) for Allah the One Who (has) revealed to His slave the Book and not (has) made in it any crookedness",
+      "transliteration": "al-ḥamdu lillahi alladhī anzala ʿalā ʿabdihi l-kitāba walam yajʿal lahu ʿiwajā",
       "words": [
         "ٱلْحَمْدُ",
         "لِلَّهِ",
@@ -327,14 +338,14 @@
       ],
       "blanks": [
         {
-          "word": "ٱلْحَمْدُ",
+          "word": "عَبْدِهِ",
           "options": [
-            "لَّدُنْهُ",
-            "ٱلْحَمْدُ",
-            "لَنَا",
-            "ٱلَّذِىٓ"
+            "مِنْ",
+            "رَبَّنَآ",
+            "إِلَّا",
+            "عَبْدِهِ"
           ],
-          "correctIndex": 1
+          "correctIndex": 3
         }
       ]
     },
@@ -343,6 +354,7 @@
       "verse_key": "18:2",
       "arabic": "قَيِّمًۭا لِّيُنذِرَ بَأْسًۭا شَدِيدًۭا مِّن لَّدُنْهُ وَيُبَشِّرَ ٱلْمُؤْمِنِينَ ٱلَّذِينَ يَعْمَلُونَ ٱلصَّـٰلِحَـٰتِ أَنَّ لَهُمْ أَجْرًا حَسَنًۭا",
       "english": "Straight to warn (of) a punishment severe from near Him and give glad tidings (to) the believers those who do righteous deeds that for them (is) a good reward (is) a good reward",
+      "transliteration": "qayyiman liyundhira basan shadīdan min ladun'hu wayubashira l-mu'minīna alladhīna yaʿmalūna l-ṣāliḥāti anna lahum ajran ḥasanan",
       "words": [
         "قَيِّمًۭا",
         "لِّيُنذِرَ",
@@ -362,14 +374,14 @@
       ],
       "blanks": [
         {
-          "word": "ٱلْمُؤْمِنِينَ",
+          "word": "وَيُبَشِّرَ",
           "options": [
-            "لِلَّهِ",
-            "ٱلْمُؤْمِنِينَ",
-            "ٱتَّخَذَ",
-            "يَعْمَلُونَ"
+            "وَيُبَشِّرَ",
+            "بَأْسًۭا",
+            "عِوَجَاۜ",
+            "يَقُولُونَ"
           ],
-          "correctIndex": 1
+          "correctIndex": 0
         }
       ]
     },
@@ -378,6 +390,7 @@
       "verse_key": "18:3",
       "arabic": "مَّـٰكِثِينَ فِيهِ أَبَدًۭا",
       "english": "(They will) abide in it forever",
+      "transliteration": "mākithīna fīhi abadan",
       "words": [
         "مَّـٰكِثِينَ",
         "فِيهِ",
@@ -387,12 +400,12 @@
         {
           "word": "أَبَدًۭا",
           "options": [
-            "أَبَدًۭا",
-            "عَبْدِهِ",
-            "يَجْعَل",
-            "ٱلْأَرْضِ"
+            "حَسِبْتَ",
+            "أَصْحَـٰبَ",
+            "كَانُوا۟",
+            "أَبَدًۭا"
           ],
-          "correctIndex": 0
+          "correctIndex": 3
         }
       ]
     },
@@ -401,6 +414,7 @@
       "verse_key": "18:4",
       "arabic": "وَيُنذِرَ ٱلَّذِينَ قَالُوا۟ ٱتَّخَذَ ٱللَّهُ وَلَدًۭا",
       "english": "And to warn those who say Allah has taken Allah has taken a son",
+      "transliteration": "wayundhira alladhīna qālū ittakhadha l-lahu waladan",
       "words": [
         "وَيُنذِرَ",
         "ٱلَّذِينَ",
@@ -411,12 +425,12 @@
       ],
       "blanks": [
         {
-          "word": "وَلَدًۭا",
+          "word": "وَيُنذِرَ",
           "options": [
-            "عَبْدِهِ",
-            "وَلَدًۭا",
-            "كَلِمَةًۭ",
-            "يَجْعَل"
+            "عَلَيْهَا",
+            "وَيُنذِرَ",
+            "ٱتَّخَذَ",
+            "عَلَىٰ"
           ],
           "correctIndex": 1
         }
@@ -427,6 +441,7 @@
       "verse_key": "18:5",
       "arabic": "مَّا لَهُم بِهِۦ مِنْ عِلْمٍۢ وَلَا لِـَٔابَآئِهِمْ ۚ كَبُرَتْ كَلِمَةًۭ تَخْرُجُ مِنْ أَفْوَٰهِهِمْ ۚ إِن يَقُولُونَ إِلَّا كَذِبًۭا",
       "english": "Not they have about it any knowledge and not their forefathers Grave (is) the word (that) comes out of their mouths Not they say except a lie",
+      "transliteration": "mā lahum bihi min ʿil'min walā liābāihim kaburat kalimatan takhruju min afwāhihim in yaqūlūna illā kadhiban",
       "words": [
         "مَّا",
         "لَهُم",
@@ -447,14 +462,14 @@
       ],
       "blanks": [
         {
-          "word": "لِـَٔابَآئِهِمْ ۚ",
+          "word": "تَخْرُجُ",
           "options": [
-            "ٱلْحَمْدُ",
-            "إِلَّا",
-            "حَسِبْتَ",
-            "لِـَٔابَآئِهِمْ ۚ"
+            "مَّا",
+            "تَخْرُجُ",
+            "مِنْ",
+            "أَيُّهُمْ"
           ],
-          "correctIndex": 3
+          "correctIndex": 1
         }
       ]
     },
@@ -463,6 +478,7 @@
       "verse_key": "18:6",
       "arabic": "فَلَعَلَّكَ بَـٰخِعٌۭ نَّفْسَكَ عَلَىٰٓ ءَاثَـٰرِهِمْ إِن لَّمْ يُؤْمِنُوا۟ بِهَـٰذَا ٱلْحَدِيثِ أَسَفًا",
       "english": "Then perhaps you would (be) the one who kills yourself over their footsteps if not they believe in this [the] narration (in) grief",
+      "transliteration": "falaʿallaka bākhiʿun nafsaka ʿalā āthārihim in lam yu'minū bihādhā l-ḥadīthi asafan",
       "words": [
         "فَلَعَلَّكَ",
         "بَـٰخِعٌۭ",
@@ -478,14 +494,14 @@
       ],
       "blanks": [
         {
-          "word": "عَلَىٰٓ",
+          "word": "فَلَعَلَّكَ",
           "options": [
-            "زِينَةًۭ",
-            "عَلَىٰٓ",
-            "أَبَدًۭا",
-            "ٱلَّذِينَ"
+            "وَٱلرَّقِيمِ",
+            "جُرُزًا",
+            "بَـٰخِعٌۭ",
+            "فَلَعَلَّكَ"
           ],
-          "correctIndex": 1
+          "correctIndex": 3
         }
       ]
     },
@@ -494,6 +510,7 @@
       "verse_key": "18:7",
       "arabic": "إِنَّا جَعَلْنَا مَا عَلَى ٱلْأَرْضِ زِينَةًۭ لَّهَا لِنَبْلُوَهُمْ أَيُّهُمْ أَحْسَنُ عَمَلًۭا",
       "english": "Indeed, We We have made what (is) on the earth adornment for it that We may test [them] which of them (is) best (in) deed",
+      "transliteration": "innā jaʿalnā mā ʿalā l-arḍi zīnatan lahā linabluwahum ayyuhum aḥsanu ʿamalan",
       "words": [
         "إِنَّا",
         "جَعَلْنَا",
@@ -509,14 +526,14 @@
       ],
       "blanks": [
         {
-          "word": "لِنَبْلُوَهُمْ",
+          "word": "لَّهَا",
           "options": [
-            "ٱلْكِتَـٰبَ",
-            "لِنَبْلُوَهُمْ",
-            "أَصْحَـٰبَ",
-            "يَجْعَل"
+            "ٱلَّذِينَ",
+            "ٱلْحَمْدُ",
+            "فَلَعَلَّكَ",
+            "لَّهَا"
           ],
-          "correctIndex": 1
+          "correctIndex": 3
         }
       ]
     },
@@ -525,6 +542,7 @@
       "verse_key": "18:8",
       "arabic": "وَإِنَّا لَجَـٰعِلُونَ مَا عَلَيْهَا صَعِيدًۭا جُرُزًا",
       "english": "And indeed, We (will) surely make what (is) on it soil barren",
+      "transliteration": "wa-innā lajāʿilūna mā ʿalayhā ṣaʿīdan juruzan",
       "words": [
         "وَإِنَّا",
         "لَجَـٰعِلُونَ",
@@ -535,14 +553,14 @@
       ],
       "blanks": [
         {
-          "word": "جُرُزًا",
+          "word": "لَجَـٰعِلُونَ",
           "options": [
-            "جُرُزًا",
-            "أَفْوَٰهِهِمْ ۚ",
-            "إِلَّا",
-            "وَٱلرَّقِيمِ"
+            "لَّهَا",
+            "يُؤْمِنُوا۟",
+            "لَجَـٰعِلُونَ",
+            "جَعَلْنَا"
           ],
-          "correctIndex": 0
+          "correctIndex": 2
         }
       ]
     },
@@ -551,6 +569,7 @@
       "verse_key": "18:9",
       "arabic": "أَمْ حَسِبْتَ أَنَّ أَصْحَـٰبَ ٱلْكَهْفِ وَٱلرَّقِيمِ كَانُوا۟ مِنْ ءَايَـٰتِنَا عَجَبًا",
       "english": "Or have you thought that (the) companions (of) the cave and the inscription were among Our Signs a wonder",
+      "transliteration": "am ḥasib'ta anna aṣḥāba l-kahfi wal-raqīmi kānū min āyātinā ʿajaban",
       "words": [
         "أَمْ",
         "حَسِبْتَ",
@@ -565,12 +584,12 @@
       ],
       "blanks": [
         {
-          "word": "حَسِبْتَ",
+          "word": "عَجَبًا",
           "options": [
-            "حَسِبْتَ",
-            "مَّا",
-            "لَهُم",
-            "ٱتَّخَذَ"
+            "عَجَبًا",
+            "ٱلْفِتْيَةُ",
+            "لَّهَا",
+            "رَشَدًۭا"
           ],
           "correctIndex": 0
         }
@@ -581,6 +600,7 @@
       "verse_key": "18:10",
       "arabic": "إِذْ أَوَى ٱلْفِتْيَةُ إِلَى ٱلْكَهْفِ فَقَالُوا۟ رَبَّنَآ ءَاتِنَا مِن لَّدُنكَ رَحْمَةًۭ وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًۭا",
       "english": "When retreated the youths to the cave and they said Our Lord Grant us from Yourself Mercy and facilitate for us [from] our affair (in the) right way",
+      "transliteration": "idh awā l-fit'yatu ilā l-kahfi faqālū rabbanā ātinā min ladunka raḥmatan wahayyi lanā min amrinā rashadan",
       "words": [
         "إِذْ",
         "أَوَى",
@@ -601,12 +621,12 @@
       ],
       "blanks": [
         {
-          "word": "فَقَالُوا۟",
+          "word": "مِنْ",
           "options": [
-            "أَبَدًۭا",
-            "كَذِبًۭا",
-            "وَيُنذِرَ",
-            "فَقَالُوا۟"
+            "عَلَىٰٓ",
+            "إِنَّا",
+            "لِـَٔابَآئِهِمْ ۚ",
+            "مِنْ"
           ],
           "correctIndex": 3
         }

@@ -287,13 +287,20 @@ export default function App() {
                       onClick={() => handleOptionSelect(i)}
                       disabled={selectedOption !== null}
                       className={clsx(
-                        "font-arabic text-3xl py-6 rounded-xl border-2 transition-all duration-300 font-medium shadow-sm",
+                        "font-arabic text-3xl py-6 rounded-xl border-2 transition-all duration-300 font-medium shadow-sm flex flex-col items-center gap-2",
                         getOptionClass(i)
                       )}
                     >
-                      {opt}
+                      <span>{opt}</span>
                     </button>
                   ))}
+                </div>
+
+                <div className="w-full mt-6 bg-brand-surface-container-lowest p-4 rounded-xl border border-brand-outline-variant/20 shadow-sm">
+                  <p className="text-sm font-bold text-brand-primary mb-1 uppercase tracking-wider">Transliteration</p>
+                  <p className="font-sans text-brand-on-surface-variant italic leading-relaxed">
+                    {activeQuestion.transliteration}
+                  </p>
                 </div>
               </div>
             </motion.div>

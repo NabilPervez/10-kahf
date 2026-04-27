@@ -36,6 +36,8 @@ async function generateData() {
       
       const english = words.map(w => w.translation?.text || '').filter(Boolean).join(' ');
 
+      const transliteration = words.map(w => w.transliteration?.text || '').filter(Boolean).join(' ');
+
       // Select a random significant word to blank out
       const validWords = words.filter(w => w.text_uthmani.length > 3);
       let targetWordObj = validWords.length > 0 ? validWords[Math.floor(Math.random() * validWords.length)] : words[0];
@@ -54,6 +56,7 @@ async function generateData() {
         verse_key: verse.verse_key,
         arabic: arabic,
         english: english,
+        transliteration: transliteration,
         words: words.map(w => w.text_uthmani),
         blanks: [
           {
